@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5a49efba-2564-4d09-a83d-442317f59998" name="Changes" comment="Method: longestLine() and added comments">
+    <list default="true" id="5a49efba-2564-4d09-a83d-442317f59998" name="Changes" comment="Method: computeLongestLine(), countChars() &amp;  compareStringsLexicographically()  completed and added comments">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Exam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Exam.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/test1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/test1.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +53,7 @@
       <option name="presentableId" value="Default" />
       <updated>1652785464998</updated>
       <workItem from="1652785466414" duration="5387000" />
-      <workItem from="1652792783835" duration="6150000" />
+      <workItem from="1652792783835" duration="8501000" />
     </task>
     <task id="LOCAL-00001" summary="Created project">
       <created>1652785489971</created>
@@ -91,7 +90,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652798168880</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Method: computeLongestLine(), countChars() &amp;  compareStringsLexicographically()  completed and added comments">
+      <created>1652800113065</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1652800113065</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -114,6 +120,7 @@
     <MESSAGE value="Method: findWordsCommonToAllLines()&#10;Completed and added comments" />
     <MESSAGE value="Method: extractWords() &amp;&amp; computeWordsCommonToAllLines()&#10;Completed and added comments" />
     <MESSAGE value="Method: longestLine() and added comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="Method: longestLine() and added comments" />
+    <MESSAGE value="Method: computeLongestLine(), countChars() &amp;  compareStringsLexicographically()  completed and added comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="Method: computeLongestLine(), countChars() &amp;  compareStringsLexicographically()  completed and added comments" />
   </component>
 </project>
