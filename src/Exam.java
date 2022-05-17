@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 /*
 This is the exam for DM563 - Concurrent Programming, Spring 2022.
@@ -109,11 +111,12 @@ public class Exam {
     private static List<LocatedWord> findWordsCommonToAllLines(Path dir) {
         long t1 = System.currentTimeMillis();
         List<LocatedWord> wordsCommonToAllLines = new ArrayList<>(); // List of all the LocatedWords that appear in all the lines
-        ExecutorService executor = Executors.newWorkStealingPool(); // // Contains a pool of available threads
+        ExecutorService executor = Executors.newWorkStealingPool(); // Contains a pool of available threads
         ExecutorCompletionService<List<LocatedWord>> completionService = new ExecutorCompletionService<>(executor); // Used to manage the tasks of the executor
 
         try{
             long pendingTasks = Files.walk(dir) // Walks through the directory
+                    //.parallel()
                     .filter(Files::isRegularFile) // Checks whether is a regular file
                     .filter(filePath -> filePath.toString().endsWith(".txt")) // Checks whether is a txt file
                     .map(filePath ->
@@ -181,7 +184,61 @@ public class Exam {
      * @return the line with the highest number of letters found among all text files inside of dir
      */
     private static Location longestLine(Path dir) {
-        throw new UnsupportedOperationException(); // Remove this once you implement the method
+        long t1 = System.currentTimeMillis();
+        AtomicReference<Location> locationOfLongestLine = new AtomicReference<>(); // Atomic reference that indicates the Location of the longest line
+        AtomicInteger maxChars = new AtomicInteger(-1); // AtomicInteger that contains the num of the chars of the longest line, initially set to -1 as no line has been found
+        ExecutorService executor = Executors.newWorkStealingPool(); // Contains a pool of available threads
+        ExecutorCompletionService<List<Object>> completionService = new ExecutorCompletionService<>(executor); // Used to manage the tasks of the executor
+
+        try{
+            long pendingTasks = Files.walk(dir) // Walks through the directory
+                    //.parallel()
+                    .filter(Files::isRegularFile) // Checks whether is a regular file
+                    .filter(filePath -> filePath.toString().endsWith(".txt")) // Checks whether is a txt file
+                    .map(filePath ->
+                            completionService.submit(()-> computeLongestLine(filePath))).count(); // Assign each filePath to a new task (thread)
+
+            while (pendingTasks > 0) { // For each task
+                try{
+                    // Gets the longest line of the file in the form of a List<Object> where:
+                    // -> index 0: Integer that indicates the num of char of the longest line
+                    // -> index 1: Location that indicates the location of the longest line
+                    List<Object> longestLineOfEachFile = completionService.take().get();
+
+                    if((int)longestLineOfEachFile.get(0)>maxChars.get()){ // If a new longest line is found
+                        maxChars.set((int)longestLineOfEachFile.get(0)); // Updates the value with the new amount of chars
+                        locationOfLongestLine.set((Location) longestLineOfEachFile.get(1)); // Updates the location the longest line
+                    }
+
+                    else if((int)longestLineOfEachFile.get(0) == maxChars.get()){ // Otherwise, if the same amount of chars are found in the 2 lines, then
+                        locationOfLongestLine.set(compareStringsLexicographically(locationOfLongestLine.get(),(Location) longestLineOfEachFile.get(1))); // Updates the location the longest line that has the path the precedes the other lexicographically 
+                        maxChars.set((int)longestLineOfEachFile.get(0)); // // Updates the value with the new amount of chars
+                    }
+                    
+                } catch(ExecutionException | IOException exception){ // If an error occurs
+                    exception.printStackTrace(); // Prints the error
+                }
+                pendingTasks--; // Task is completed
+            }
+        }catch (InterruptedException exception) { // If an error occurs
+            exception.printStackTrace(); // Prints the error
+        }
+        try { // Tries to shut down the executor
+            executor.shutdown(); // Shutdowns the executor
+            executor.awaitTermination(1, TimeUnit.DAYS); // Waits for the executor to terminate
+        } catch (InterruptedException exception) { // If an error occurs
+            exception.printStackTrace(); // Prints the error
+        }
+        long t2 = System.currentTimeMillis();
+        System.out.println("Elapsed time: " + (t2 - t1) + "ms");
+
+        return locationOfLongestLine.get(); // Returns the location of the longest line
+    }
+
+    private static List<Object> computeLongestLine(Path filePath) {
+    }
+
+    private static Location compareStringsLexicographically(Location location, Location location1) {
     }
 
     /**

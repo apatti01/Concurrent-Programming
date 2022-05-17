@@ -2,44 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a49efba-2564-4d09-a83d-442317f59998" name="Changes" comment="Method: extractWords() &amp;&amp; computeWordsCommonToAllLines()&#10;Completed and added comments">
-      <change afterPath="$PROJECT_DIR$/src/data/t1/test3.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data/t1/test4.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data/test1.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data/test2.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/d1/d3/text5.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/d1/text1.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/d1/text10.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/d1/text2.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/d1/text3.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/d1/text4.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/d1/text6.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/d1/text7.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/d1/text8.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/d1/text9.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/d2/d4/d3/text5.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/d2/d4/text1.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/d2/d4/text10.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/d2/d4/text2.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/d2/d4/text3.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/d2/d4/text4.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/d2/d4/text6.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/d2/d4/text7.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/d2/d4/text8.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/d2/d4/text9.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/d2/text10.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/d2/text2.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/d2/text4.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/d2/text5.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/text1.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/text10.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/text2.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/text3.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/text4.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/text5.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/text6.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/text7.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/text8.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/nData/text9.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Exam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Exam.java" afterDir="false" />
     </list>
@@ -73,7 +35,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/apatt/OneDrive/Desktop/UCY/6o eksamino/Concurrent Programming/Exam",
+    "last_opened_file_path": "C:/Users/apatt/OneDrive/Desktop/UCY/6o eksamino/Concurrent Programming/ExamCP",
     "nodejs_package_manager_path": "npm"
   }
 }]]></component>
@@ -91,7 +53,7 @@
       <option name="presentableId" value="Default" />
       <updated>1652785464998</updated>
       <workItem from="1652785466414" duration="5387000" />
-      <workItem from="1652792783835" duration="329000" />
+      <workItem from="1652792783835" duration="3608000" />
     </task>
     <task id="LOCAL-00001" summary="Created project">
       <created>1652785489971</created>
@@ -114,7 +76,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652787840383</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Method: extractWords() &amp;&amp; computeWordsCommonToAllLines()&#10;Completed and added comments">
+      <created>1652793150441</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1652793150442</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
