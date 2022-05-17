@@ -11,6 +11,8 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /*
 This is the exam for DM563 - Concurrent Programming, Spring 2022.
@@ -345,11 +347,12 @@ public class Exam {
         } catch (InterruptedException exception) { // If an error occurs
             exception.printStackTrace(); // Prints the error
         }
-        if (wordsWithTheSuffix.size() > 0) // If there are words in the list
-            return wordsWithTheSuffix.subList(0, Math.min(limit, wordsWithTheSuffix.size())); // return the words, but make sure that no more words than the limit are returned.
 
         long t2 = System.currentTimeMillis();
         System.out.println("Elapsed time: " + (t2 - t1) + "ms");
+
+        if (wordsWithTheSuffix.size() > 0) // If there are words in the list
+            return wordsWithTheSuffix.subList(0, Math.min(limit, wordsWithTheSuffix.size())); // return the words, but make sure that no more words than the limit are returned.
 
         return wordsWithTheSuffix; // Otherwise, return the empty list, as there are no words in it.
     }
@@ -504,7 +507,7 @@ public class Exam {
         try {
             Optional<String> wordFound = Files.lines(dir) // Reads the lines of the text file
                     //.parallel()
-                    .flatMap(line -> extractWords(line).stream()) // Transforms Stream<String> to Stream<List<String>> where it contains lines and all the words for each line
+                    .flatMap(line -> extractWords(line).stream()) // Transforms Stream<String> to Stream<String> where it contains all the words for each line
                     .filter(w -> countVowels(w) == vowels) // Filters the stream so that it only includes the words that have the requested amount of vowels
                     .findFirst(); // Returns the first that has been found
 
@@ -546,7 +549,22 @@ public class Exam {
 
     /********************************** Used in method wordsEndingWith() ********************************************/
 
-    private static List<LocatedWord> computeWordsEndingWith(Path filePath, String suffix, int limit) {
+    private static List<LocatedWord> computeWordsEndingWith(Path dir, String suffix, int limit) {
+        List<LocatedWord> wordsEndingWithOfFile = new ArrayList<>(); // A list with all the words that end with the requested suffix, initially empty
+
+        try {
+            Stream<LocatedWord> wordsWithSuffix = Files.lines(dir) // Reads the lines of the text file
+                    //.parallel()
+                    .flatMap(line -> extractWords(line).stream()) // Transforms Stream<String> to Stream<String> where it contains all the words for each line
+                    .filter(w -> w.endsWith(suffix)) // Filter so that it contains only the words that end with the requested suffix
+                    .map(w -> new LocatedWord(w, dir)) // Transforms Stream<String> to Stream<LocatedWord> with all the words that end with the requested suffix in this form
+                    .limit(limit); // If more words than the limit appear, remove them
+
+            wordsEndingWithOfFile.addAll(wordsWithSuffix.collect(Collectors.toList())); // Add all the words to the lsit
+        } catch (IOException exception) { // If an error occurs
+            exception.printStackTrace(); // Print the error
+        }
+        return wordsEndingWithOfFile; // Return all the words that end with the requested suffix
     }
 
     /********************************** Used in a lot of methods ****************************************************/
