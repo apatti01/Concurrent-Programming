@@ -1,7 +1,11 @@
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.*;
 
 /*
 This is the exam for DM563 - Concurrent Programming, Spring 2022.
@@ -102,7 +106,34 @@ public class Exam {
      * @return a list of words that, within a file inside dir, appear on every line
      */
     private static List<LocatedWord> findWordsCommonToAllLines(Path dir) {
-        throw new UnsupportedOperationException(); // Remove this once you implement the method
+        long t1 = System.currentTimeMillis();
+        List<LocatedWord> wordsCommonToAllLines = new ArrayList<>(); // List of all the LocatedWords that appear in all the lines
+        ExecutorService executor = Executors.newWorkStealingPool(); // // Contains a pool of available threads
+        ExecutorCompletionService<List<LocatedWord>> completionService = new ExecutorCompletionService<>(executor); // Used to manage the tasks of the executor
+
+        try{
+            long pendingTasks = Files.walk(dir) // Walks through the directory
+                    .filter(Files::isRegularFile) // Checks whether is a regular file
+                    .filter(filePath -> filePath.toString().endsWith(".txt")) // Checks whether is a txt file
+                    .map(filePath ->
+                            completionService.submit(()-> computeWordsCommonToAllLines(filePath))).count(); // Assign each filePath to a new task (thread)
+
+            while (pendingTasks > 0) { // For each task
+                wordsCommonToAllLines.addAll(completionService.take().get()); // Add the words that have been found to the list from the task
+                pendingTasks--; // Task is completed
+            }
+        }catch (InterruptedException | ExecutionException | IOException exception) { // If an error occurs
+            exception.printStackTrace(); // Prints the error
+        }
+        try { // Tries to shut down the executor
+            executor.shutdown(); // Shutdowns the executor
+            executor.awaitTermination(1, TimeUnit.DAYS); // Waits for the executor to terminate
+        } catch (InterruptedException exception) { // If an error occurs
+            exception.printStackTrace(); // Prints the error
+        }
+        long t2 = System.currentTimeMillis();
+        System.out.println("Elapsed time: " + (t2 - t1) + "ms");
+        return wordsCommonToAllLines;
     }
 
     /** Returns the line with the highest number of letters among all the lines
