@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -133,7 +134,30 @@ public class Exam {
         }
         long t2 = System.currentTimeMillis();
         System.out.println("Elapsed time: " + (t2 - t1) + "ms");
-        return wordsCommonToAllLines;
+        return wordsCommonToAllLines; // Returns the requested list
+    }
+
+    private static List<LocatedWord> computeWordsCommonToAllLines(Path dir) {
+        List<LocatedWord> wordsCommonToAllLines = new ArrayList<>(); // List of all the LocatedWords that appear in all the lines
+        try{
+            Optional<List<String>> words = Files.lines(dir) // Reads the lines of the text file
+                    .parallel()
+                    .filter(line -> !line.isBlank()) // Filters out the lines that are blank as we don't care about them
+                    .map(Exam::extractWords) // Transforms Stream<String> to Stream<List<String>> where it contains lines and all the words for each line
+                    .reduce((line1, line2) -> { // Finds the commonWords
+                        line2.retainAll(line1); // Intersection of the two lines
+                        return line2; // Returns one line instead of two, that has all the words that appear in both of the lines
+                    });
+
+            if (words.isPresent()) // If there are common words
+                for (String w : words.get()) // For each of the word that is found
+                    wordsCommonToAllLines.add(new LocatedWord(w, dir)); // Add the word in the form of LocatedWord to the list
+
+        }catch (IOException exception) { // If an error occurs
+            exception.printStackTrace(); // Prints the error
+        }
+
+        return wordsCommonToAllLines; // Returns the requested list
     }
 
     /** Returns the line with the highest number of letters among all the lines
@@ -250,5 +274,31 @@ public class Exam {
         private InternalException(String message) {
             super(message);
         }
+    }
+
+
+    /**
+     * Method that uses BreakIterator to find all the words of the line that is given as a parameter
+     * @param line The String that we want to find the words
+     * @return a List<String> containing the words
+     */
+    private static List<String> extractWords(String line) {
+        List<String> wordsFromLine = new ArrayList<>(); // List with all the words from line
+        BreakIterator it = BreakIterator.getWordInstance(); // BreakIterator to split the string to words
+        it.setText(line); // Set the text of the break iterator with the parameter line
+
+        int start = it.first(); // Indicates the index of the first character of the first word of the text
+        int end = it.next(); // Indicates the index of the first character of the second word of the text
+
+        while (end != BreakIterator.DONE) { // While there are still words
+            String word = line.substring(start, end); // word stores the word given by the iterator
+            if (Character.isLetterOrDigit(word.charAt(0))) { // If the word starts with a letter (checks if it's actually a word)
+                wordsFromLine.add(word); // Then add it to the list
+            }
+            start = end; // Proceeds to the next word
+            end = it.next(); // Proceeds to the next word
+        }
+
+        return wordsFromLine; // Returns the split words
     }
 }
