@@ -122,7 +122,8 @@ public class Exam {
                     .filter(Files::isRegularFile) // Checks whether is a regular file
                     .filter(filePath -> filePath.toString().endsWith(".txt")) // Checks whether is a txt file
                     .map(filePath ->
-                            completionService.submit(() -> computeWordsCommonToAllLines(filePath))).count(); // Assign each filePath to a new task (thread)
+                            completionService.submit(() -> computeWordsCommonToAllLines(filePath))) // Assign each filePath to a new task (thread)
+                    .count(); // Counts the pending tasks
 
             while (pendingTasks > 0) { // For each task
                 wordsCommonToAllLines.addAll(completionService.take().get()); // Add the words that have been found to the list from the task
@@ -176,7 +177,8 @@ public class Exam {
                     .filter(Files::isRegularFile) // Checks whether is a regular file
                     .filter(filePath -> filePath.toString().endsWith(".txt")) // Checks whether is a txt file
                     .map(filePath ->
-                            completionService.submit(() -> computeLongestLine(filePath))).count(); // Assign each filePath to a new task (thread)
+                            completionService.submit(() -> computeLongestLine(filePath))) // Assign each filePath to a new task (thread)
+                    .count(); // Counts the pending tasks
 
             while (pendingTasks > 0) { // For each task
                 try {
@@ -190,7 +192,7 @@ public class Exam {
                         locationOfLongestLine.set((Location) longestLineOfEachFile.get(1)); // Updates the location the longest line
                     } else if ((int) longestLineOfEachFile.get(0) == maxChars.get()) { // Otherwise, if the same amount of chars are found in the 2 lines, then
                         locationOfLongestLine.set(compareStringsLexicographically(locationOfLongestLine.get(), (Location) longestLineOfEachFile.get(1))); // Updates the location the longest line that has the path the precedes the other lexicographically
-                        maxChars.set((int) longestLineOfEachFile.get(0)); // // Updates the value with the new amount of chars
+                        maxChars.set((int) longestLineOfEachFile.get(0)); // Updates the value with the new amount of chars
                     }
 
                 } catch (InterruptedException | ExecutionException exception) { // If an error occurs
@@ -257,7 +259,8 @@ public class Exam {
                     .filter(Files::isRegularFile) // Checks whether is a regular file
                     .filter(filePath -> filePath.toString().endsWith(".txt")) // Checks whether is a txt file
                     .map(filePath ->
-                            completionService.submit(() -> computeWordWithVowels(filePath, vowels))).count(); // Assign each filePath to a new task (thread)
+                            completionService.submit(() -> computeWordWithVowels(filePath, vowels))) // Assign each filePath to a new task (thread)
+                    .count(); // Counts the pending tasks
 
             while (pendingTasks > 0 && !found.get()) { // While there are still tasks that have not completed yet AND the word has not been found yet
                 Optional<LocatedWord> word = completionService.take().get(); // Gets the result of the task
@@ -308,7 +311,47 @@ public class Exam {
      * @return a list of locations where the given suffix has been found
      */
     private static List<LocatedWord> wordsEndingWith(Path dir, String suffix, int limit) {
-        throw new UnsupportedOperationException(); // Remove this once you implement the method
+        long t1 = System.currentTimeMillis();
+        List<LocatedWord> wordsWithTheSuffix = new ArrayList<>(); // List of all the LocatedWords that end with the requested suffix
+        AtomicBoolean found = new AtomicBoolean(false); // Boolean that indicates if the word has been found
+
+        ExecutorService executor = Executors.newWorkStealingPool(); // Contains a pool of available threads
+        ExecutorCompletionService<List<LocatedWord>> completionService = new ExecutorCompletionService<>(executor); // Used to manage the tasks of the executor
+
+        try {
+            long pendingTasks = Files.walk(dir) // Walks through the directory
+                    //.parallel()
+                    .filter(Files::isRegularFile) // Checks whether is a regular file
+                    .filter(filePath -> filePath.toString().endsWith(".txt")) // Checks whether is a txt file
+                    .map(filePath ->
+                            completionService.submit(() -> computeWordsEndingWith(filePath, suffix, limit))) // Create a new thread & execute the following code
+                    .count(); // Counts the pending tasks
+
+            while (pendingTasks > 0 && !found.get()) { // While there are still tasks that have not completed yet AND the word has not been found yet
+                if (!(wordsWithTheSuffix.size() >= limit)) { // If not enough words with the suffix have been found
+                    wordsWithTheSuffix.addAll(completionService.take().get()); // Add all the words that have been found from the current task to the list
+                } else { // Otherwise
+                    found.set(true); // Set the value of the boolean to true as all the words have been found
+                    break; // and strop the while loop
+                }
+                pendingTasks--; // Task is completed
+            }
+        } catch (InterruptedException | ExecutionException | IOException exception) { // If an error occurs
+            exception.printStackTrace(); // Prints the error
+        }
+        try { // Tries to shut down the executor
+            executor.shutdown(); // Shutdowns the executor
+            executor.awaitTermination(1, TimeUnit.DAYS); // Waits for the executor to terminate
+        } catch (InterruptedException exception) { // If an error occurs
+            exception.printStackTrace(); // Prints the error
+        }
+        if (wordsWithTheSuffix.size() > 0) // If there are words in the list
+            return wordsWithTheSuffix.subList(0, Math.min(limit, wordsWithTheSuffix.size())); // return the words, but make sure that no more words than the limit are returned.
+
+        long t2 = System.currentTimeMillis();
+        System.out.println("Elapsed time: " + (t2 - t1) + "ms");
+
+        return wordsWithTheSuffix; // Otherwise, return the empty list, as there are no words in it.
     }
 
     // Do not change this class
@@ -499,6 +542,11 @@ public class Exam {
                 vowels++; // Increment the vowel count
 
         return vowels; // Return the num of vowels
+    }
+
+    /********************************** Used in method wordsEndingWith() ********************************************/
+
+    private static List<LocatedWord> computeWordsEndingWith(Path filePath, String suffix, int limit) {
     }
 
     /********************************** Used in a lot of methods ****************************************************/
