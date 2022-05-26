@@ -409,24 +409,31 @@ public class Exam {
                         return line2; // Returns one line instead of two, that has all the words that appear in both of the lines
                     });
 
-            AtomicBoolean duplicate = new AtomicBoolean(false); //Boolean that looks out for duplicates
             if (words.isPresent()) // If there are common words
-                for (String w : words.get()) { // For each of the word that is found
-                    duplicate.set(false); // Duplicate has not been found yet
-                    for (LocatedWord locatedWord : wordsCommonToAllLines) // For every word that already is in list wordsCommonToAllLines
-                        if (locatedWord.word.equals(w)){ // If a word already exists (is a duplicate)
-                            duplicate.set(true); // Sets duplicate to true
-                            break; // Stops the for-loop
-                        }
-                    if(!duplicate.get()) // If the word is not a duplicate
+                for (String w : words.get()) // For each of the word that is found
+                    if(!wordIsDuplicate(w,wordsCommonToAllLines)) // If the word is not a duplicate
                         wordsCommonToAllLines.add(new LocatedWord(w, dir)); // Add the word in the form of LocatedWord to the list
-                }
+
         } catch (IOException exception) { // If an error occurs
             exception.printStackTrace(); // Prints the error
         }
 
         return wordsCommonToAllLines; // Returns the requested list
     }
+
+    private static boolean wordIsDuplicate(String w,List<LocatedWord> wordsCommonToAllLines) {
+        AtomicBoolean duplicate = new AtomicBoolean(false); //Boolean that looks out for duplicates
+        duplicate.set(false); // Duplicate has not been found yet
+
+        for (LocatedWord locatedWord : wordsCommonToAllLines) // For every word that already is in list wordsCommonToAllLines
+            if (locatedWord.word.equals(w)){ // If a word already exists (is a duplicate)
+                duplicate.set(true); // Sets duplicate to true
+                break; // Stops the for-loop
+            }
+
+        return duplicate.get(); // Return result
+    }
+
 
     /********************************* Used in method longestLine() *************************************************/
 

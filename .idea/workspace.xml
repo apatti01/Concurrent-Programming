@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5a49efba-2564-4d09-a83d-442317f59998" name="Changes" comment="Fixed longestLine() method:&#10;compared filename instead of path">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="5a49efba-2564-4d09-a83d-442317f59998" name="Changes" comment="Fixed computeWordsCommonToAllLines() method:&#10;duplicates are not printed">
       <change beforePath="$PROJECT_DIR$/src/Exam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Exam.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/test2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/test2.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +66,7 @@
       <workItem from="1652792783835" duration="12123000" />
       <workItem from="1653521141627" duration="297000" />
       <workItem from="1653551679041" duration="6321000" />
-      <workItem from="1653593232650" duration="3322000" />
+      <workItem from="1653593232650" duration="5499000" />
     </task>
     <task id="LOCAL-00001" summary="Created project">
       <created>1652785489971</created>
@@ -147,7 +145,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653562381400</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Fixed computeWordsCommonToAllLines() method:&#10;duplicates are not printed">
+      <created>1653596705339</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1653596705339</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -177,6 +182,7 @@
     <MESSAGE value="Method: computeWordsEndingWith() and added comments" />
     <MESSAGE value="Project is ready!" />
     <MESSAGE value="Fixed longestLine() method:&#10;compared filename instead of path" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed longestLine() method:&#10;compared filename instead of path" />
+    <MESSAGE value="Fixed computeWordsCommonToAllLines() method:&#10;duplicates are not printed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed computeWordsCommonToAllLines() method:&#10;duplicates are not printed" />
   </component>
 </project>
