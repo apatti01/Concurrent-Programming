@@ -113,7 +113,7 @@ public class Exam {
      * @return a list of words that, within a file inside dir, appear on every line
      */
     private static List<LocatedWord> findWordsCommonToAllLines(Path dir) {
-        long t1 = System.currentTimeMillis();
+        // long t1 = System.currentTimeMillis();
         List<LocatedWord> wordsCommonToAllLines = new ArrayList<>(); // List of all the LocatedWords that appear in all the lines
         ExecutorService executor = Executors.newWorkStealingPool(); // Contains a pool of available threads
         ExecutorCompletionService<List<LocatedWord>> completionService = new ExecutorCompletionService<>(executor); // Used to manage the tasks of the executor
@@ -140,8 +140,8 @@ public class Exam {
         } catch (InterruptedException exception) { // If an error occurs
             exception.printStackTrace(); // Prints the error
         }
-        long t2 = System.currentTimeMillis();
-        System.out.println("Elapsed time: " + (t2 - t1) + "ms");
+        // long t2 = System.currentTimeMillis();
+        // System.out.println("Elapsed time: " + (t2 - t1) + "ms");
         return wordsCommonToAllLines; // Returns the requested list
     }
 
@@ -167,7 +167,7 @@ public class Exam {
      * @return the line with the highest number of letters found among all text files inside of dir
      */
     private static Location longestLine(Path dir) {
-        long t1 = System.currentTimeMillis();
+        // long t1 = System.currentTimeMillis();
         AtomicReference<Location> locationOfLongestLine = new AtomicReference<>(); // Atomic reference that indicates the Location of the longest line
         AtomicInteger maxChars = new AtomicInteger(-1); // AtomicInteger that contains the num of the chars of the longest line, initially set to -1 as no line has been found
         ExecutorService executor = Executors.newWorkStealingPool(); // Contains a pool of available threads
@@ -211,8 +211,8 @@ public class Exam {
         } catch (InterruptedException exception) { // If an error occurs
             exception.printStackTrace(); // Prints the error
         }
-        long t2 = System.currentTimeMillis();
-        System.out.println("Elapsed time: " + (t2 - t1) + "ms");
+        // long t2 = System.currentTimeMillis();
+        // System.out.println("Elapsed time: " + (t2 - t1) + "ms");
 
         return locationOfLongestLine.get(); // Returns the location of the longest line
     }
@@ -248,7 +248,7 @@ public class Exam {
      * @return an optional LocatedWord about a word containing exactly n vowels
      */
     private static Optional<LocatedWord> wordWithVowels(Path dir, int vowels) {
-        long t1 = System.currentTimeMillis();
+        // long t1 = System.currentTimeMillis();
         AtomicReference<Optional<LocatedWord>> wordWithVowels = new AtomicReference<>(Optional.empty()); // LocatedWord containing the word with the requested amount of vowels, initially empty (Optional.empty())
         AtomicBoolean found = new AtomicBoolean(false); // Boolean to check if the wordWithVowel has been found
 
@@ -281,8 +281,8 @@ public class Exam {
         } catch (InterruptedException exception) { // If an error occurs
             exception.printStackTrace(); // Prints the error
         }
-        long t2 = System.currentTimeMillis();
-        System.out.println("Elapsed time: " + (t2 - t1) + "ms");
+        // long t2 = System.currentTimeMillis();
+        // System.out.println("Elapsed time: " + (t2 - t1) + "ms");
         return wordWithVowels.get(); // Return the LocatedWord
     }
 
@@ -313,7 +313,7 @@ public class Exam {
      * @return a list of locations where the given suffix has been found
      */
     private static List<LocatedWord> wordsEndingWith(Path dir, String suffix, int limit) {
-        long t1 = System.currentTimeMillis();
+        // long t1 = System.currentTimeMillis();
         List<LocatedWord> wordsWithTheSuffix = new ArrayList<>(); // List of all the LocatedWords that end with the requested suffix
         AtomicBoolean found = new AtomicBoolean(false); // Boolean that indicates if the word has been found
 
@@ -348,8 +348,8 @@ public class Exam {
             exception.printStackTrace(); // Prints the error
         }
 
-        long t2 = System.currentTimeMillis();
-        System.out.println("Elapsed time: " + (t2 - t1) + "ms");
+        // long t2 = System.currentTimeMillis();
+        // System.out.println("Elapsed time: " + (t2 - t1) + "ms");
 
         if (wordsWithTheSuffix.size() > 0) // If there are words in the list
             return wordsWithTheSuffix.subList(0, Math.min(limit, wordsWithTheSuffix.size())); // return the words, but make sure that no more words than the limit are returned.
@@ -430,8 +430,8 @@ public class Exam {
         AtomicInteger maxChars = new AtomicInteger(-1); // AtomicInteger that contains the num of the chars of the longest line, initially set to -1 as no line has been found
 
         List<Object> list = new ArrayList<>(); // longest line of the file in the form of a List<Object> where:
-        //       -> index 0: Integer that indicates the num of char of the longest line
-        //       -> index 1: Location that indicates the location of the longest line
+                                               //       -> index 0: Integer that indicates the num of char of the longest line
+                                               //       -> index 1: Location that indicates the location of the longest line
         try {
             AtomicInteger counterOfLines = new AtomicInteger(0); // Counts the current line
             Files.lines(dir) // Reads the lines of the text file
@@ -488,7 +488,7 @@ public class Exam {
      * @return the location of which it's filename precedes the other's filename lexicographically
      */
     private static Location compareStringsLexicographically(Location location1, Location location2) {
-        if (location1.filepath.toString().compareTo(location2.filepath.toString()) < 0) { // if the first file is lexicographically smaller than the second
+        if (location1.filepath.getFileName().toString().compareTo(location2.filepath.getFileName().toString()) > 0) { // if the first file is lexicographically smaller than the second
             return location2; // Return the second
         }
         return location1; // Otherwise, return the first

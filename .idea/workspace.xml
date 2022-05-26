@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5a49efba-2564-4d09-a83d-442317f59998" name="Changes" comment="Method: computeWordsEndingWith() and added comments" />
+    <list default="true" id="5a49efba-2564-4d09-a83d-442317f59998" name="Changes" comment="Project is ready!">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Exam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Exam.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,7 +35,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/apatt/OneDrive/Desktop/UCY/6o eksamino/Concurrent Programming/ExamCP",
+    "last_opened_file_path": "C:/Users/apatt/OneDrive/Desktop/UCY/6o eksamino/Concurrent Programming/Exam/src",
     "nodejs_package_manager_path": "npm"
   }
 }]]></component>
@@ -40,6 +43,17 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\apatt\OneDrive\Desktop\UCY\6o eksamino\Concurrent Programming\Exam\src" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Exam" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Exam" />
+      <module name="Exam" />
+      <option name="PROGRAM_PARAMETERS" value="longestLine nData" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -50,7 +64,9 @@
       <option name="presentableId" value="Default" />
       <updated>1652785464998</updated>
       <workItem from="1652785466414" duration="5387000" />
-      <workItem from="1652792783835" duration="11883000" />
+      <workItem from="1652792783835" duration="12123000" />
+      <workItem from="1653521141627" duration="297000" />
+      <workItem from="1653551679041" duration="5175000" />
     </task>
     <task id="LOCAL-00001" summary="Created project">
       <created>1652785489971</created>
@@ -115,7 +131,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652805791063</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Project is ready!">
+      <created>1652806041503</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1652806041503</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -143,6 +166,7 @@
     <MESSAGE value="Method: wordsEndingWith(), and added comments" />
     <MESSAGE value="Method: wordsEndingWith() and added comments" />
     <MESSAGE value="Method: computeWordsEndingWith() and added comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="Method: computeWordsEndingWith() and added comments" />
+    <MESSAGE value="Project is ready!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Project is ready!" />
   </component>
 </project>
