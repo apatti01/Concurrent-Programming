@@ -3,10 +3,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.BreakIterator;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -142,7 +139,14 @@ public class Exam {
         }
         // long t2 = System.currentTimeMillis();
         // System.out.println("Elapsed time: " + (t2 - t1) + "ms");
-        return wordsCommonToAllLines; // Returns the requested list
+        return wordsCommonToAllLines;
+//        return wordsCommonToAllLines.stream()
+//                .reduce((word1,word2) ->{
+//                    if(word1.word.equals(word2.word) && word1.filepath.equals(word2.filepath))
+//                        return word1;
+//                })
+//                .collect(Collectors.toList()); // Returns the requested list
+
     }
 
     /**
@@ -330,7 +334,7 @@ public class Exam {
                     .count(); // Counts the pending tasks
 
             while (pendingTasks > 0 && !found.get()) { // While there are still tasks that have not completed yet AND the word has not been found yet
-                if (!(wordsWithTheSuffix.size() >= limit)) { // If not enough words with the suffix have been found
+                if (wordsWithTheSuffix.size() <= limit) { // If not enough words with the suffix have been found
                     wordsWithTheSuffix.addAll(completionService.take().get()); // Add all the words that have been found from the current task to the list
                 } else { // Otherwise
                     found.set(true); // Set the value of the boolean to true as all the words have been found
@@ -405,10 +409,18 @@ public class Exam {
                         return line2; // Returns one line instead of two, that has all the words that appear in both of the lines
                     });
 
+            AtomicBoolean duplicate = new AtomicBoolean(false); //Boolean that looks out for duplicates
             if (words.isPresent()) // If there are common words
-                for (String w : words.get()) // For each of the word that is found
-                    wordsCommonToAllLines.add(new LocatedWord(w, dir)); // Add the word in the form of LocatedWord to the list
-
+                for (String w : words.get()) { // For each of the word that is found
+                    duplicate.set(false); // Duplicate has not been found yet
+                    for (LocatedWord locatedWord : wordsCommonToAllLines) // For every word that already is in list wordsCommonToAllLines
+                        if (locatedWord.word.equals(w)){ // If a word already exists (is a duplicate)
+                            duplicate.set(true); // Sets duplicate to true
+                            break; // Stops the for-loop
+                        }
+                    if(!duplicate.get()) // If the word is not a duplicate
+                        wordsCommonToAllLines.add(new LocatedWord(w, dir)); // Add the word in the form of LocatedWord to the list
+                }
         } catch (IOException exception) { // If an error occurs
             exception.printStackTrace(); // Prints the error
         }
