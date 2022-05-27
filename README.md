@@ -26,7 +26,7 @@ You are welcome to create additional methods to structure your project, and also
 Class `Exam` comes with a `main` method that implements a simple command line interface, which allows you to test your methods.
 From the directory where you have stored `Exam.java`, run `java Exam help` to check whether you set up is working. (There is no need to compile it if you are using Java 11 or above.)
 
-The methods that you have to implement have to search for text files in a directory. To test your project, you can use the directory `data` inside of this zip file: <https://raw.githubusercontent.com/fmontesi/cp2022/main/exam/data.zip>. For example, you can unzip `data.zip` in the same directory where you have your `Exam.java` file and launch from that directory the command `java Exam allLines data`. The directory that I will use in the evaluation will follow the same format, but it will be different.
+The methods that you have to implement have to search for text files in a directory. To test your project, you can use the directory `data2` inside of this zip file: <https://raw.githubusercontent.com/fmontesi/cp2022/main/exam/data2.zip>. For example, you can unzip `data2.zip` in the same directory where you have your `Exam.java` file and launch from that directory the command `java Exam allLines data2`. The directory that I will use in the evaluation will follow the same format, but it will be different.
 
 ## Other remarks
 

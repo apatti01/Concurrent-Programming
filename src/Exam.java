@@ -111,7 +111,9 @@ public class Exam {
      */
     private static List<LocatedWord> findWordsCommonToAllLines(Path dir) {
         // long t1 = System.currentTimeMillis();
+        
         List<LocatedWord> wordsCommonToAllLines = new ArrayList<>(); // List of all the LocatedWords that appear in all the lines
+
         ExecutorService executor = Executors.newWorkStealingPool(); // Contains a pool of available threads
         ExecutorCompletionService<List<LocatedWord>> completionService = new ExecutorCompletionService<>(executor); // Used to manage the tasks of the executor
 
@@ -139,14 +141,8 @@ public class Exam {
         }
         // long t2 = System.currentTimeMillis();
         // System.out.println("Elapsed time: " + (t2 - t1) + "ms");
-        return wordsCommonToAllLines;
-//        return wordsCommonToAllLines.stream()
-//                .reduce((word1,word2) ->{
-//                    if(word1.word.equals(word2.word) && word1.filepath.equals(word2.filepath))
-//                        return word1;
-//                })
-//                .collect(Collectors.toList()); // Returns the requested list
-
+        
+        return wordsCommonToAllLines; // Returns the list with the words that exist in all the lines of each text
     }
 
     /**
@@ -172,8 +168,10 @@ public class Exam {
      */
     private static Location longestLine(Path dir) {
         // long t1 = System.currentTimeMillis();
-        AtomicReference<Location> locationOfLongestLine = new AtomicReference<>(); // Atomic reference that indicates the Location of the longest line
+        
+        AtomicReference<Location> longestLine = new AtomicReference<>(); // Atomic reference that indicates the Location of the longest line
         AtomicInteger maxChars = new AtomicInteger(-1); // AtomicInteger that contains the num of the chars of the longest line, initially set to -1 as no line has been found
+
         ExecutorService executor = Executors.newWorkStealingPool(); // Contains a pool of available threads
         ExecutorCompletionService<List<Object>> completionService = new ExecutorCompletionService<>(executor); // Used to manage the tasks of the executor
 
@@ -187,6 +185,7 @@ public class Exam {
                     .count(); // Counts the pending tasks
 
             while (pendingTasks > 0) { // For each task
+
                 try {
                     // Gets the longest line of the file in the form of a List<Object> where:
                     // -> index 0: Integer that indicates the num of char of the longest line
@@ -195,15 +194,18 @@ public class Exam {
 
                     if ((int) longestLineOfEachFile.get(0) > maxChars.get()) { // If a new longest line is found
                         maxChars.set((int) longestLineOfEachFile.get(0)); // Updates the value with the new amount of chars
-                        locationOfLongestLine.set((Location) longestLineOfEachFile.get(1)); // Updates the location the longest line
-                    } else if ((int) longestLineOfEachFile.get(0) == maxChars.get()) { // Otherwise, if the same amount of chars are found in the 2 lines, then
-                        locationOfLongestLine.set(compareStringsLexicographically(locationOfLongestLine.get(), (Location) longestLineOfEachFile.get(1))); // Updates the location the longest line that has the path the precedes the other lexicographically
+                        longestLine.set((Location) longestLineOfEachFile.get(1)); // Updates the location the longest line
+                    }
+
+                    else if ((int) longestLineOfEachFile.get(0) == maxChars.get()) { // Otherwise, if the same amount of chars are found in the 2 lines, then
+                        longestLine.set(compareStringsLexicographically(longestLine.get(), (Location) longestLineOfEachFile.get(1))); // Updates the location the longest line that has the path the precedes the other lexicographically
                         maxChars.set((int) longestLineOfEachFile.get(0)); // Updates the value with the new amount of chars
                     }
 
                 } catch (InterruptedException | ExecutionException exception) { // If an error occurs
                     exception.printStackTrace(); // Prints the error
                 }
+
                 pendingTasks--; // Task is completed
             }
         } catch (IOException exception) { // If an error occurs
@@ -218,7 +220,7 @@ public class Exam {
         // long t2 = System.currentTimeMillis();
         // System.out.println("Elapsed time: " + (t2 - t1) + "ms");
 
-        return locationOfLongestLine.get(); // Returns the location of the longest line
+        return longestLine.get(); // Returns the location of the longest line
     }
 
     /**
@@ -253,6 +255,7 @@ public class Exam {
      */
     private static Optional<LocatedWord> wordWithVowels(Path dir, int vowels) {
         // long t1 = System.currentTimeMillis();
+
         AtomicReference<Optional<LocatedWord>> wordWithVowels = new AtomicReference<>(Optional.empty()); // LocatedWord containing the word with the requested amount of vowels, initially empty (Optional.empty())
         AtomicBoolean found = new AtomicBoolean(false); // Boolean to check if the wordWithVowel has been found
 
@@ -269,11 +272,14 @@ public class Exam {
                     .count(); // Counts the pending tasks
 
             while (pendingTasks > 0 && !found.get()) { // While there are still tasks that have not completed yet AND the word has not been found yet
+
                 Optional<LocatedWord> word = completionService.take().get(); // Gets the result of the task
+
                 if (!word.get().word.equals("")) { // If the word is not empty
                     wordWithVowels.set(Optional.of(new LocatedWord(word.get().word, word.get().filepath))); // Set the value of wordWithVowel to have the value of the found word
                     found.set(true); // Set the boolean to true as the word has been found
                 }
+
                 pendingTasks--; // Task is completed
             }
         } catch (InterruptedException | ExecutionException | IOException exception) { // If an error occurs
@@ -287,7 +293,8 @@ public class Exam {
         }
         // long t2 = System.currentTimeMillis();
         // System.out.println("Elapsed time: " + (t2 - t1) + "ms");
-        return wordWithVowels.get(); // Return the LocatedWord
+
+        return wordWithVowels.get(); // Returns the LocatedWord
     }
 
     /**
@@ -318,7 +325,8 @@ public class Exam {
      */
     private static List<LocatedWord> wordsEndingWith(Path dir, String suffix, int limit) {
         // long t1 = System.currentTimeMillis();
-        List<LocatedWord> wordsWithTheSuffix = new ArrayList<>(); // List of all the LocatedWords that end with the requested suffix
+
+        List<LocatedWord> wordsEndingWith = new ArrayList<>(); // List of all the LocatedWords that end with the requested suffix
         AtomicBoolean found = new AtomicBoolean(false); // Boolean that indicates if the word has been found
 
         ExecutorService executor = Executors.newWorkStealingPool(); // Contains a pool of available threads
@@ -334,12 +342,14 @@ public class Exam {
                     .count(); // Counts the pending tasks
 
             while (pendingTasks > 0 && !found.get()) { // While there are still tasks that have not completed yet AND the word has not been found yet
-                if (wordsWithTheSuffix.size() <= limit) { // If not enough words with the suffix have been found
-                    wordsWithTheSuffix.addAll(completionService.take().get()); // Add all the words that have been found from the current task to the list
+
+                if (wordsEndingWith.size() <= limit) { // If not enough words with the suffix have been found
+                    wordsEndingWith.addAll(completionService.take().get()); // Add all the words that have been found from the current task to the list
                 } else { // Otherwise
                     found.set(true); // Set the value of the boolean to true as all the words have been found
                     break; // and strop the while loop
                 }
+
                 pendingTasks--; // Task is completed
             }
         } catch (InterruptedException | ExecutionException | IOException exception) { // If an error occurs
@@ -355,10 +365,10 @@ public class Exam {
         // long t2 = System.currentTimeMillis();
         // System.out.println("Elapsed time: " + (t2 - t1) + "ms");
 
-        if (wordsWithTheSuffix.size() > 0) // If there are words in the list
-            return wordsWithTheSuffix.subList(0, Math.min(limit, wordsWithTheSuffix.size())); // return the words, but make sure that no more words than the limit are returned.
+        if (wordsEndingWith.size() > 0) // If there are words in the list
+            return wordsEndingWith.subList(0, Math.min(limit, wordsEndingWith.size())); // return the words, but make sure that no more words than the limit are returned.
 
-        return wordsWithTheSuffix; // Otherwise, return the empty list, as there are no words in it.
+        return wordsEndingWith; // Otherwise, return the empty list, as there are no words in it.
     }
 
     // Do not change this class
@@ -398,7 +408,9 @@ public class Exam {
      * @return List<LocatedWord> with all the common words
      */
     private static List<LocatedWord> computeWordsCommonToAllLines(Path dir) {
-        List<LocatedWord> wordsCommonToAllLines = new ArrayList<>(); // List of all the LocatedWords that appear in all the lines
+
+        List<LocatedWord> wordsCommonToAllLinesOfFile = new ArrayList<>(); // List of all the LocatedWords that appear in all the lines
+
         try {
             Optional<List<String>> words = Files.lines(dir) // Reads the lines of the text file
                     //.parallel()
@@ -411,27 +423,34 @@ public class Exam {
 
             if (words.isPresent()) // If there are common words
                 for (String w : words.get()) // For each of the word that is found
-                    if(!wordIsDuplicate(w,wordsCommonToAllLines)) // If the word is not a duplicate
-                        wordsCommonToAllLines.add(new LocatedWord(w, dir)); // Add the word in the form of LocatedWord to the list
+                    if(!wordIsDuplicate(w,wordsCommonToAllLinesOfFile)) // If the word is not a duplicate
+                        wordsCommonToAllLinesOfFile.add(new LocatedWord(w, dir)); // Add the word in the form of LocatedWord to the list
 
         } catch (IOException exception) { // If an error occurs
             exception.printStackTrace(); // Prints the error
         }
 
-        return wordsCommonToAllLines; // Returns the requested list
+        return wordsCommonToAllLinesOfFile; // Returns the requested list
     }
 
+    /**
+     * Method to check if a list contains a word more than one time.
+     *
+     * @param w word
+     * @param wordsCommonToAllLines list
+     * @return True or False
+     */
     private static boolean wordIsDuplicate(String w,List<LocatedWord> wordsCommonToAllLines) {
-        AtomicBoolean duplicate = new AtomicBoolean(false); //Boolean that looks out for duplicates
-        duplicate.set(false); // Duplicate has not been found yet
+
+        AtomicBoolean wordIsDuplicate = new AtomicBoolean(false); //Boolean that looks out for duplicates
 
         for (LocatedWord locatedWord : wordsCommonToAllLines) // For every word that already is in list wordsCommonToAllLines
             if (locatedWord.word.equals(w)){ // If a word already exists (is a duplicate)
-                duplicate.set(true); // Sets duplicate to true
-                break; // Stops the for-loop
+                wordIsDuplicate.set(true); // Sets duplicate to true
+                break; // Stops the for loop
             }
 
-        return duplicate.get(); // Return result
+        return wordIsDuplicate.get(); // Return result
     }
 
 
@@ -445,14 +464,16 @@ public class Exam {
      *                 index 1: Location that indicates the location of the longest line
      */
     private static List<Object> computeLongestLine(Path dir) {
-        AtomicReference<Location> locOfLocationOfEachFile = new AtomicReference<>(); // Atomic reference that indicates the Location of the longest line
+
+        AtomicReference<Location> locationOfLongestLineOfFile = new AtomicReference<>(); // Atomic reference that indicates the Location of the longest line
         AtomicInteger maxChars = new AtomicInteger(-1); // AtomicInteger that contains the num of the chars of the longest line, initially set to -1 as no line has been found
 
-        List<Object> list = new ArrayList<>(); // longest line of the file in the form of a List<Object> where:
+        List<Object> longestLineOfFile = new ArrayList<>(); // longest line of the file in the form of a List<Object> where:
                                                //       -> index 0: Integer that indicates the num of char of the longest line
                                                //       -> index 1: Location that indicates the location of the longest line
         try {
             AtomicInteger counterOfLines = new AtomicInteger(0); // Counts the current line
+
             Files.lines(dir) // Reads the lines of the text file
                     //.parallel()
                     .map(String::toLowerCase) // No case-sensitive
@@ -460,16 +481,17 @@ public class Exam {
                         counterOfLines.getAndIncrement(); // Count the number of lines that have been checked
                         if (countChars(line) > maxChars.get()) { // If a new longest line is found
                             maxChars.set(countChars(line)); // Update the value of the amount of chars of the longest line
-                            locOfLocationOfEachFile.set(new Location(dir, counterOfLines.get())); // Updates the location of the longest line
+                            locationOfLongestLineOfFile.set(new Location(dir, counterOfLines.get())); // Updates the location of the longest line
                         }
                     });
         } catch (IOException exception) { // If an error occurs
             exception.printStackTrace(); // Prints the error
         }
-        list.add(maxChars.get()); // Inserts the amount of chars of the longest line of the file
-        list.add(locOfLocationOfEachFile.get()); // Inserts the location of the longest line of the file
 
-        return list; // Returns the list with the details of the longest line
+        longestLineOfFile.add(maxChars.get()); // Inserts the amount of chars of the longest line of the file
+        longestLineOfFile.add(locationOfLongestLineOfFile.get()); // Inserts the location of the longest line of the file
+
+        return longestLineOfFile; // Returns the list with the details of the longest line
     }
 
     /**
@@ -479,7 +501,8 @@ public class Exam {
      * @return the num of chars of the line
      */
     private static int countChars(String line) {
-        int chars = 0; // Number of chars of the line
+
+        int countChars = 0; // Number of chars of the line
 
         BreakIterator it = BreakIterator.getCharacterInstance(Locale.ENGLISH); // Create break iterator to split ENGLISH strings into characters
         it.setText(line); // Setting the text of the BreakIterator with the line of the text file that was given as parameter
@@ -487,14 +510,16 @@ public class Exam {
         int start = it.first(); // First character of the line
         int end = it.next(); // First character of the second word of the line
         while (end != BreakIterator.DONE) { // While all the chars of the line have been checked
+
             if (Character.isLetter(line.substring(start, end).charAt(0))) { // if the character is a letter the count, otherwise skip
-                chars++; // Increment the amount of chars
+                countChars++; // Increment the amount of chars
             }
+
             start = end; // start indicates to the next char
             end = it.next(); // moves on to the next char
         }
 
-        return chars; // Returns the amount of chars of the line
+        return countChars; // Returns the amount of chars of the line
     }
 
     /**
@@ -507,9 +532,10 @@ public class Exam {
      * @return the location of which it's filename precedes the other's filename lexicographically
      */
     private static Location compareStringsLexicographically(Location location1, Location location2) {
-        if (location1.filepath.getFileName().toString().compareTo(location2.filepath.getFileName().toString()) > 0) { // if the first file is lexicographically smaller than the second
+
+        if (location1.filepath.getFileName().toString().compareTo(location2.filepath.getFileName().toString()) > 0) // if the first file is lexicographically smaller than the second
             return location2; // Return the second
-        }
+
         return location1; // Otherwise, return the first
     }
 
@@ -522,6 +548,7 @@ public class Exam {
      * @return word with the requested amount of vowels or if there isn't a word, the Option.empty() is returned instead
      */
     private static Optional<LocatedWord> computeWordWithVowels(Path dir, int vowels) {
+
         Optional<LocatedWord> wordWithVowelsOfFile = Optional.empty(); // Indicates the word with the requested amount of vowels
         try {
             Optional<String> wordFound = Files.lines(dir) // Reads the lines of the text file
@@ -537,6 +564,7 @@ public class Exam {
         } catch (IOException exception) { // If an error occurs
             exception.printStackTrace(); // Print the error
         }
+
         return wordWithVowelsOfFile; // Returns word with the requested amount of vowels
     }
 
@@ -546,8 +574,10 @@ public class Exam {
      * @return True or False
      */
     private static boolean checkIfVowel(char c){
+
         if(c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') // If it's a vowel
             return true;
+
         return false; // Otherwise
     }
 
@@ -557,18 +587,20 @@ public class Exam {
      * @return number of vowels that a word contains
      */
     private static int countVowels(String word) {
-        int vowels = 0; // counter of the vowels of each word
+
+        int countVowels = 0; // counter of the vowels of each word
 
         for (char c : word.toCharArray()) // For each character in the word
             if (checkIfVowel(c))  //If the word is long enough and has the correct number of vowels
-                vowels++; // Increment the vowel count
+                countVowels++; // Increment the vowel count
 
-        return vowels; // Return the num of vowels
+        return countVowels; // Return the num of vowels
     }
 
     /********************************** Used in method wordsEndingWith() ********************************************/
 
     private static List<LocatedWord> computeWordsEndingWith(Path dir, String suffix, int limit) {
+
         List<LocatedWord> wordsEndingWithOfFile = new ArrayList<>(); // A list with all the words that end with the requested suffix, initially empty
 
         try {
@@ -583,6 +615,7 @@ public class Exam {
         } catch (IOException exception) { // If an error occurs
             exception.printStackTrace(); // Print the error
         }
+
         return wordsEndingWithOfFile; // Return all the words that end with the requested suffix
     }
 
@@ -595,7 +628,9 @@ public class Exam {
      * @return a List<String> containing the words
      */
     private static List<String> extractWords(String line) {
-        List<String> wordsFromLine = new ArrayList<>(); // List with all the words from line
+
+        List<String> extractWords = new ArrayList<>(); // List with all the words from line
+
         BreakIterator it = BreakIterator.getWordInstance(); // BreakIterator to split the string to words
         it.setText(line); // Set the text of the break iterator with the parameter line
 
@@ -603,14 +638,16 @@ public class Exam {
         int end = it.next(); // Indicates the index of the first character of the second word of the text
 
         while (end != BreakIterator.DONE) { // While there are still words
+
             String word = line.substring(start, end).toLowerCase(Locale.ENGLISH); // word stores the word given by the iterator
             if (Character.isLetterOrDigit(word.charAt(0))) { // If the word starts with a letter (checks if it's actually a word)
-                wordsFromLine.add(word); // Then add it to the list
+                extractWords.add(word); // Then add it to the list
             }
+
             start = end; // Proceeds to the next word
             end = it.next(); // Proceeds to the next word
         }
 
-        return wordsFromLine; // Returns the split words
+        return extractWords; // Returns the split words
     }
 }

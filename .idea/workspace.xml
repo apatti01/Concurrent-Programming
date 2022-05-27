@@ -1,8 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5a49efba-2564-4d09-a83d-442317f59998" name="Changes" comment="Fixed computeWordsCommonToAllLines() method:&#10;duplicates are not printed">
+    <list default="true" id="5a49efba-2564-4d09-a83d-442317f59998" name="Changes" comment="Created wordIsDuplicatewordIsDuplicate() method:&#10;Checks for duplicates in a list of LocatedWords">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Exam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Exam.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/t1/test3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data2/t1/test3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/t1/test4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data2/t1/test4.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/test1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data2/test1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/test2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data2/test2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/d1/d3/text5.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/d1/d3/text5.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/d1/text1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/d1/text1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/d1/text10.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/d1/text10.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/d1/text2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/d1/text2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/d1/text3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/d1/text3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/d1/text4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/d1/text4.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/d1/text6.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/d1/text6.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/d1/text7.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/d1/text7.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/d1/text8.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/d1/text8.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/d1/text9.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/d1/text9.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/d2/d4/d3/text5.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/d2/d4/d3/text5.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/d2/d4/text1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/d2/d4/text1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/d2/d4/text10.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/d2/d4/text10.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/d2/d4/text2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/d2/d4/text2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/d2/d4/text3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/d2/d4/text3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/d2/d4/text4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/d2/d4/text4.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/d2/d4/text6.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/d2/d4/text6.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/d2/d4/text7.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/d2/d4/text7.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/d2/d4/text8.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/d2/d4/text8.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/d2/d4/text9.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/d2/d4/text9.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/d2/text10.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/d2/text10.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/d2/text2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/d2/text2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/d2/text4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/d2/text4.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/d2/text5.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/d2/text5.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/text1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/text1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/text10.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/text10.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/text2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/text2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/text3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/text3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/text4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/text4.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/text5.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/text5.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/text6.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/text6.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/text7.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/text7.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/text8.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/text8.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nData/text9.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data1/text9.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +106,7 @@
       <workItem from="1652792783835" duration="12123000" />
       <workItem from="1653521141627" duration="297000" />
       <workItem from="1653551679041" duration="6321000" />
-      <workItem from="1653593232650" duration="5499000" />
+      <workItem from="1653593232650" duration="10426000" />
     </task>
     <task id="LOCAL-00001" summary="Created project">
       <created>1652785489971</created>
@@ -152,7 +192,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653596705339</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Created wordIsDuplicatewordIsDuplicate() method:&#10;Checks for duplicates in a list of LocatedWords">
+      <created>1653600487161</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1653600487161</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -183,6 +230,7 @@
     <MESSAGE value="Project is ready!" />
     <MESSAGE value="Fixed longestLine() method:&#10;compared filename instead of path" />
     <MESSAGE value="Fixed computeWordsCommonToAllLines() method:&#10;duplicates are not printed" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed computeWordsCommonToAllLines() method:&#10;duplicates are not printed" />
+    <MESSAGE value="Created wordIsDuplicatewordIsDuplicate() method:&#10;Checks for duplicates in a list of LocatedWords" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created wordIsDuplicatewordIsDuplicate() method:&#10;Checks for duplicates in a list of LocatedWords" />
   </component>
 </project>
